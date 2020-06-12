@@ -27,27 +27,27 @@ namespace Program_for_diplom {
         }
 
         private void Button_con_Click(object sender, EventArgs e) {
-            if (_buttonClickFlag == false) {
+            if (_connectionFlag == false) {
                 string portName = cbPortsName.SelectedItem.ToString();
                 rtbLogger.AppendText("Выбран порт: " + portName + "\r\n");
                 Connect(portName);
-            } else if (_buttonClickFlag == true) {
+            } else if (_connectionFlag == true) {
                 btConnect.Text = "Соединение";
                 lbStatus.Text = "Не подключено";
+                lbStatus.ForeColor = Color.Red;
                 _connectionFlag = false;
                 _comport.Close();
-                _buttonClickFlag = false;
             }
         }
 
         private void Connect(string name) {
             _comport.PortName = name;
-            _comport.BaudRate = 9600;
+            _comport.BaudRate = 38400;
             _comport.DataBits = 8;
             _comport.Parity = Parity.None;
             _comport.StopBits = StopBits.One;
-            _comport.ReadTimeout = 2;
-            _comport.WriteTimeout = 2;
+            _comport.ReadTimeout = 500;
+            _comport.WriteTimeout = 500;
             _comport.DataReceived += Comport_DataReceived;
             rtbLogger.AppendText("Параметры порта:\r\nСкорость передачи:" + _comport.BaudRate.ToString() + "\r\n");
             rtbLogger.AppendText("Длина данных:" + _comport.DataBits.ToString() + "\r\n");
