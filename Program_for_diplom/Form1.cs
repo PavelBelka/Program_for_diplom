@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Threading;
 //ЫЫЫЫЫЫЫЫЫЫЫЫЫ
 namespace Program_for_diplom {
     public partial class Form1 : Form {
@@ -79,12 +80,14 @@ namespace Program_for_diplom {
         private void tryToConnect(int i) {
             rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
             Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
-            while (true) {
+            /*while (true) { короч тут нихуа не работает
                 if (_readFlag) {
                     _readFlag = false;
                     break;
                 }
-            }
+            }*/
+            Thread.Sleep(10);
+            readCommand(3);
             rtbLogger.AppendText(Data);
             if ((_readBuffer[0] == 65) && (_readBuffer[1] == 86) && (_readBuffer[2] == 69)) {
                 rtbLogger.AppendText("Соединение установлено.\r\n");
@@ -112,7 +115,7 @@ namespace Program_for_diplom {
             try {
                 Data = "Чтение ответа:\r\n";
                 int bufferSize = _comport.BytesToRead;
-                if (bufferSize == 4) // тут 4 потому что у меня терминал в конце ставит /n, у тебя может быть по-другому
+                if (bufferSize == 3) 
                 {
                     readCommand(bufferSize);
                 } else {
@@ -125,7 +128,7 @@ namespace Program_for_diplom {
 
         private void readCommand(int bufferSize) {
             Data = "";
-            for (int i = 0; i < bufferSize - 1; i++) { //тут -1 потому что последний в буфере - \n, он нах не сдался
+            for (int i = 0; i < bufferSize; i++) {
                 _readBuffer[i] = (byte)_comport.ReadByte();
                 Data += $"{_readBuffer[i]} ";
             }
