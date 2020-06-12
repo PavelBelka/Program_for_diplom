@@ -1,0 +1,10 @@
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Program_for_diplom.exe.config
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Program_for_diplom.exe
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Program_for_diplom.pdb
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csprojAssemblyReference.cache
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.Form1.resources
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.Properties.Resources.resources
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csproj.GenerateResource.cache
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csproj.CoreCompileInputs.cache
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.exe
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.pdb
