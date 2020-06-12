@@ -41,7 +41,7 @@ namespace Program_for_diplom {
 
         private void Connect(string name) {
             comport.PortName = name;
-            comport.BaudRate = 9600;
+            comport.BaudRate = 38400;
             comport.DataBits = 8;
             comport.Parity = Parity.None;
             comport.StopBits = StopBits.One;
