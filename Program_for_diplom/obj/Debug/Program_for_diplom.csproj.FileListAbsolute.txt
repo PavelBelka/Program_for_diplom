@@ -18,3 +18,13 @@ C:\Users\bears\Source\Repos\Program_for_diplom\Program_for_diplom\obj\Debug\Prog
 C:\Users\bears\Source\Repos\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csproj.CoreCompileInputs.cache
 C:\Users\bears\Source\Repos\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.exe
 C:\Users\bears\Source\Repos\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.pdb
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\bin\Debug\Program_for_diplom.exe.config
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\bin\Debug\Program_for_diplom.exe
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\bin\Debug\Program_for_diplom.pdb
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csprojAssemblyReference.cache
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.Form1.resources
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.Properties.Resources.resources
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csproj.GenerateResource.cache
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csproj.CoreCompileInputs.cache
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.exe
+C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.pdb

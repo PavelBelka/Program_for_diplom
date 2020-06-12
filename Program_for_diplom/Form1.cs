@@ -3,9 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Ports;
 
-
-// Ну-ка, дети, встаньте в ряд - запинаем-ка Гурят
-// Ну если мы не пнем - то все дружно мы помрем
 namespace Program_for_diplom {
     public partial class Form1 : Form {
         string _data = "0";
@@ -35,7 +32,6 @@ namespace Program_for_diplom {
             } else if (but_click == true) {
                 Button_con.Text = "Соединение";
                 lab_statuscon.Text = "не подключено";
-                lab_statuscon.ForeColor = Color.Red;
                 Con = false;
                 comport.Close();
                 but_click = false;
@@ -44,7 +40,7 @@ namespace Program_for_diplom {
 
         private void Connect(string name) {
             comport.PortName = name;
-            comport.BaudRate = 38400;
+            comport.BaudRate = 9600;
             comport.DataBits = 8;
             comport.Parity = Parity.None;
             comport.StopBits = StopBits.One;
@@ -74,7 +70,6 @@ namespace Program_for_diplom {
                             Con = true;
                             Button_con.Text = "Разорвать";
                             lab_statuscon.Text = "соединено";
-                            lab_statuscon.ForeColor = Color.Green;
                             break;
                         } else {
                             Box_log.AppendText("Отказ.\r\n");
@@ -126,7 +121,7 @@ namespace Program_for_diplom {
                     Read = true;
                 }
             } catch (TimeoutException exc) {
-                _data = $"Ошибка чтения буфера: {exc.ToString()}\r\n";
+                _data = $"Ошибка чтения буфера: {exc}\r\n";
                 com_port_read[0] = Convert.ToByte('!');
                 com_port_read[1] = Convert.ToByte('!');
                 com_port_read[2] = Convert.ToByte('!');
