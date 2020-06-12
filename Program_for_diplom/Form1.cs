@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Ports;
 
+
+// Ну-ка, дети, встаньте в ряд - запинаем-ка Гурят
 namespace Program_for_diplom {
     public partial class Form1 : Form {
         string _data = "0";
