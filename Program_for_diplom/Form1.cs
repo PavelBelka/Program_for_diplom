@@ -57,26 +57,12 @@ namespace Program_for_diplom {
                 if (_comport.IsOpen == true) {
                     rtbLogger.AppendText("Порт открыт. Отправка запроса устройству:\r\n");
                     for (int i = 1; i < 4; i++) {
-                        rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
-                        Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
-                        while (true) {
-                            if (_readFlag == true) {
-                                _readFlag = false;
-                                break;
-                            }
-                        }
-                        rtbLogger.AppendText(Data);
-                        if ((_readBuffer[0] == (byte)65) && (_readBuffer[1] == (byte)86) && (_readBuffer[2] == (byte)69)) {
-                            rtbLogger.AppendText("Соединение установлено.\r\n");
-                            _connectionFlag = true;
-                            btConnect.Text = "Разорвать";
-                            lbStatus.Text = "Соединено";
+                        tryToConnect();
+                        if (_connectionFlag) {
                             break;
-                        } else {
-                            rtbLogger.AppendText("Отказ.\r\n");
                         }
                     }
-                    if (_connectionFlag == false) {
+                    if (!_connectionFlag) {
                         rtbLogger.AppendText("Подключено неизвестное устройство. Переподключите еще раз или выберите другой порт.\r\n");
                         _comport.Close();
                     }
@@ -87,6 +73,26 @@ namespace Program_for_diplom {
             } catch (Exception ex) {
                 rtbLogger.AppendText("Ошибка:" + ex.ToString() + "\r\n");
                 _comport.Close();
+            }
+        }
+
+        private void tryToConnect() {
+            rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
+            Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
+            while (true) {
+                if (!_readFlag) {
+                    _readFlag = false;
+                    break;
+                }
+            }
+            rtbLogger.AppendText(Data);
+            if ((_readBuffer[0] == 65) && (_readBuffer[1] == 86) && (_readBuffer[2] == 69)) {
+                rtbLogger.AppendText("Соединение установлено.\r\n");
+                _connectionFlag = true;
+                btConnect.Text = "Разорвать";
+                lbStatus.Text = "Соединено";
+            } else {
+                rtbLogger.AppendText("Отказ.\r\n");
             }
         }
 
@@ -104,30 +110,42 @@ namespace Program_for_diplom {
         private void Comport_DataReceived(object sender, SerialDataReceivedEventArgs e) {
             try {
                 Data = "Чтение ответа:\r\n";
-                int sizebuf = _comport.BytesToRead;
-                if (sizebuf == 4) // тут 4 потому что у меня терминал в конце ставит /n, у тебя может быть по-другому
+                int bufferSize = _comport.BytesToRead;
+                if (bufferSize == 4) // тут 4 потому что у меня терминал в конце ставит /n, у тебя может быть по-другому
                 {
-                    Data = "";
-                    for (int i = 0; i < sizebuf - 1; i++) {
-                        _readBuffer[i] = (byte)_comport.ReadByte();
-                        Data += $"{_readBuffer[i]} ";
-                    }
-                    Data += "\r\n";
-                    _readFlag = true;
+                    readCommand(bufferSize);
                 } else {
-                    Data = "Ошибка чтения буфера: количество байтов не совпадает с необходимым.\r\n";
-                    _readBuffer[0] = Convert.ToByte('!');
-                    _readBuffer[1] = Convert.ToByte('!');
-                    _readBuffer[2] = Convert.ToByte('!');
-                    _readFlag = true;
+                    bufferSizeError();
                 }
-            } catch (TimeoutException exc) {
-                Data = $"Ошибка чтения буфера: {exc}\r\n";
-                _readBuffer[0] = Convert.ToByte('!');
-                _readBuffer[1] = Convert.ToByte('!');
-                _readBuffer[2] = Convert.ToByte('!');
-                _readFlag = true;
+            } catch (TimeoutException) {
+                timeOutError();
             }
+        }
+
+        private void readCommand(int bufferSize) {
+            Data = "";
+            for (int i = 0; i < bufferSize - 1; i++) { //тут -1 потому что последний в буфере - \n, он нах не сдался
+                _readBuffer[i] = (byte)_comport.ReadByte();
+                Data += $"{_readBuffer[i]} ";
+            }
+            Data += "\r\n";
+            _readFlag = true;
+        }
+
+        private void bufferSizeError() {
+            Data = "Ошибка чтения буфера: количество байтов не совпадает с необходимым.\r\n";
+            _readBuffer[0] = Convert.ToByte('!');
+            _readBuffer[1] = Convert.ToByte('!');
+            _readBuffer[2] = Convert.ToByte('!');
+            _readFlag = true;
+        }
+
+        private void timeOutError() {
+            Data = $"Ошибка чтения буфера: Время ожидания истекло\r\n";
+            _readBuffer[0] = Convert.ToByte('!');
+            _readBuffer[1] = Convert.ToByte('!');
+            _readBuffer[2] = Convert.ToByte('!');
+            _readFlag = true;
         }
     }
 }
