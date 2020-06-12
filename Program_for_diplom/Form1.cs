@@ -17,8 +17,8 @@ namespace Program_for_diplom {
             InitializeComponent();
             cbPortsName.Items.Clear();
             cbPortsName.Items.AddRange(portNames);
-            lbStatus.Text = "Не подключено";
             lbStatus.ForeColor = Color.Red;
+            lbStatus.Text = "Не подключено";
         }
 
         private void comboPort_SelectedIndexChanged(object sender, EventArgs e) {
@@ -57,7 +57,7 @@ namespace Program_for_diplom {
                 if (_comport.IsOpen == true) {
                     rtbLogger.AppendText("Порт открыт. Отправка запроса устройству:\r\n");
                     for (int i = 1; i < 4; i++) {
-                        tryToConnect();
+                        tryToConnect(i);
                         if (_connectionFlag) {
                             break;
                         }
@@ -76,11 +76,11 @@ namespace Program_for_diplom {
             }
         }
 
-        private void tryToConnect() {
+        private void tryToConnect(int i) {
             rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
             Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
             while (true) {
-                if (!_readFlag) {
+                if (_readFlag) {
                     _readFlag = false;
                     break;
                 }
@@ -90,6 +90,7 @@ namespace Program_for_diplom {
                 rtbLogger.AppendText("Соединение установлено.\r\n");
                 _connectionFlag = true;
                 btConnect.Text = "Разорвать";
+                lbStatus.ForeColor = Color.Green;
                 lbStatus.Text = "Соединено";
             } else {
                 rtbLogger.AppendText("Отказ.\r\n");
