@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Ports;
-//
+//ЫЫЫЫЫЫЫЫЫЫЫЫЫ
 namespace Program_for_diplom {
     public partial class Form1 : Form {
         private SerialPort _comport = new SerialPort();
