@@ -5,6 +5,7 @@ using System.IO.Ports;
 
 
 // Ну-ка, дети, встаньте в ряд - запинаем-ка Гурят
+// Ну если мы не пнем - то все дружно мы помрем
 namespace Program_for_diplom {
     public partial class Form1 : Form {
         string _data = "0";
