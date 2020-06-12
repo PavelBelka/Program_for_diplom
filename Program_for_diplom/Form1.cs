@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
-//ЫЫЫЫЫЫЫЫЫЫЫЫЫ
+
 namespace Program_for_diplom {
     public partial class Form1 : Form {
         private SerialPort _comport = new SerialPort();
@@ -95,6 +95,7 @@ namespace Program_for_diplom {
                 btConnect.Text = "Разорвать";
                 lbStatus.ForeColor = Color.Green;
                 lbStatus.Text = "Соединено";
+
             } else {
                 rtbLogger.AppendText("Отказ.\r\n");
             }

@@ -34,12 +34,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lbStatus = new System.Windows.Forms.Label();
-            this.lab_statusinst = new System.Windows.Forms.Label();
+            this.lb_Modeinst = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.Box_temp = new System.Windows.Forms.TextBox();
-            this.lab_temp = new System.Windows.Forms.Label();
-            this.lab_izm = new System.Windows.Forms.Label();
-            this.button_izm = new System.Windows.Forms.Button();
+            this.Bx_temp = new System.Windows.Forms.TextBox();
+            this.lb_temp = new System.Windows.Forms.Label();
+            this.lb_izmer = new System.Windows.Forms.Label();
+            this.bt_izmer = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -51,11 +51,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.Box_dist = new System.Windows.Forms.TextBox();
-            this.lab_dist = new System.Windows.Forms.Label();
+            this.Bx_distance = new System.Windows.Forms.TextBox();
+            this.lb_distance = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.Box_time = new System.Windows.Forms.TextBox();
-            this.lab_time = new System.Windows.Forms.Label();
+            this.Bx_time = new System.Windows.Forms.TextBox();
+            this.lb_time = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rtbLogger = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
@@ -63,25 +63,25 @@
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // comboPort
+            // cbPortsName
             // 
             this.cbPortsName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbPortsName.FormattingEnabled = true;
             this.cbPortsName.ItemHeight = 19;
             this.cbPortsName.Location = new System.Drawing.Point(11, 48);
             this.cbPortsName.Margin = new System.Windows.Forms.Padding(4);
-            this.cbPortsName.Name = "comboPort";
+            this.cbPortsName.Name = "cbPortsName";
             this.cbPortsName.Size = new System.Drawing.Size(99, 27);
             this.cbPortsName.TabIndex = 0;
             this.cbPortsName.SelectedIndexChanged += new System.EventHandler(this.comboPort_SelectedIndexChanged);
             // 
-            // Button_con
+            // btConnect
             // 
             this.btConnect.Enabled = false;
             this.btConnect.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.btConnect.Location = new System.Drawing.Point(118, 48);
             this.btConnect.Margin = new System.Windows.Forms.Padding(4);
-            this.btConnect.Name = "Button_con";
+            this.btConnect.Name = "btConnect";
             this.btConnect.Size = new System.Drawing.Size(105, 29);
             this.btConnect.TabIndex = 1;
             this.btConnect.Text = "Соединение";
@@ -121,25 +121,25 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Статус установки:";
             // 
-            // lab_statuscon
+            // lbStatus
             // 
             this.lbStatus.AutoSize = true;
             this.lbStatus.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lbStatus.Location = new System.Drawing.Point(145, 80);
             this.lbStatus.Margin = new System.Windows.Forms.Padding(2, 0, 4, 0);
-            this.lbStatus.Name = "lab_statuscon";
+            this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(0, 19);
             this.lbStatus.TabIndex = 7;
             // 
-            // lab_statusinst
+            // lb_Modeinst
             // 
-            this.lab_statusinst.AutoSize = true;
-            this.lab_statusinst.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_statusinst.Location = new System.Drawing.Point(135, 100);
-            this.lab_statusinst.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_statusinst.Name = "lab_statusinst";
-            this.lab_statusinst.Size = new System.Drawing.Size(0, 19);
-            this.lab_statusinst.TabIndex = 8;
+            this.lb_Modeinst.AutoSize = true;
+            this.lb_Modeinst.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_Modeinst.Location = new System.Drawing.Point(135, 100);
+            this.lb_Modeinst.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_Modeinst.Name = "lb_Modeinst";
+            this.lb_Modeinst.Size = new System.Drawing.Size(0, 19);
+            this.lb_Modeinst.TabIndex = 8;
             // 
             // label8
             // 
@@ -152,49 +152,47 @@
             this.label8.TabIndex = 10;
             this.label8.Text = "Температура:";
             // 
-            // Box_temp
+            // Bx_temp
             // 
-            this.Box_temp.Enabled = false;
-            this.Box_temp.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Box_temp.Location = new System.Drawing.Point(110, 27);
-            this.Box_temp.Margin = new System.Windows.Forms.Padding(2, 4, 4, 4);
-            this.Box_temp.Name = "Box_temp";
-            this.Box_temp.Size = new System.Drawing.Size(110, 22);
-            this.Box_temp.TabIndex = 13;
+            this.Bx_temp.Enabled = false;
+            this.Bx_temp.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Bx_temp.Location = new System.Drawing.Point(110, 27);
+            this.Bx_temp.Margin = new System.Windows.Forms.Padding(2, 4, 4, 4);
+            this.Bx_temp.Name = "Bx_temp";
+            this.Bx_temp.Size = new System.Drawing.Size(110, 22);
+            this.Bx_temp.TabIndex = 13;
             // 
-            // lab_temp
+            // lb_temp
             // 
-            this.lab_temp.AutoSize = true;
-            this.lab_temp.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_temp.Location = new System.Drawing.Point(228, 30);
-            this.lab_temp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_temp.Name = "lab_temp";
-            this.lab_temp.Size = new System.Drawing.Size(42, 19);
-            this.lab_temp.TabIndex = 15;
-            this.lab_temp.Text = "темп";
+            this.lb_temp.AutoSize = true;
+            this.lb_temp.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_temp.Location = new System.Drawing.Point(228, 30);
+            this.lb_temp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_temp.Name = "lb_temp";
+            this.lb_temp.Size = new System.Drawing.Size(0, 19);
+            this.lb_temp.TabIndex = 15;
             // 
-            // lab_izm
+            // lb_izmer
             // 
-            this.lab_izm.AutoSize = true;
-            this.lab_izm.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_izm.Location = new System.Drawing.Point(7, 120);
-            this.lab_izm.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_izm.Name = "lab_izm";
-            this.lab_izm.Size = new System.Drawing.Size(51, 19);
-            this.lab_izm.TabIndex = 18;
-            this.lab_izm.Text = "сообщ";
+            this.lb_izmer.AutoSize = true;
+            this.lb_izmer.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_izmer.Location = new System.Drawing.Point(7, 120);
+            this.lb_izmer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_izmer.Name = "lb_izmer";
+            this.lb_izmer.Size = new System.Drawing.Size(0, 19);
+            this.lb_izmer.TabIndex = 18;
             // 
-            // button_izm
+            // bt_izmer
             // 
-            this.button_izm.Enabled = false;
-            this.button_izm.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_izm.Location = new System.Drawing.Point(7, 145);
-            this.button_izm.Margin = new System.Windows.Forms.Padding(4);
-            this.button_izm.Name = "button_izm";
-            this.button_izm.Size = new System.Drawing.Size(145, 34);
-            this.button_izm.TabIndex = 19;
-            this.button_izm.Text = "Начать измерение";
-            this.button_izm.UseVisualStyleBackColor = true;
+            this.bt_izmer.Enabled = false;
+            this.bt_izmer.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bt_izmer.Location = new System.Drawing.Point(7, 145);
+            this.bt_izmer.Margin = new System.Windows.Forms.Padding(4);
+            this.bt_izmer.Name = "bt_izmer";
+            this.bt_izmer.Size = new System.Drawing.Size(145, 34);
+            this.bt_izmer.TabIndex = 19;
+            this.bt_izmer.Text = "Начать измерение";
+            this.bt_izmer.UseVisualStyleBackColor = true;
             // 
             // label16
             // 
@@ -292,7 +290,7 @@
             this.groupBox1.Controls.Add(this.lbStatus);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.lab_statusinst);
+            this.groupBox1.Controls.Add(this.lb_Modeinst);
             this.groupBox1.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox1.Location = new System.Drawing.Point(338, 12);
             this.groupBox1.Name = "groupBox1";
@@ -304,16 +302,16 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.Box_dist);
-            this.groupBox2.Controls.Add(this.lab_dist);
+            this.groupBox2.Controls.Add(this.Bx_distance);
+            this.groupBox2.Controls.Add(this.lb_distance);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.Box_time);
-            this.groupBox2.Controls.Add(this.lab_time);
+            this.groupBox2.Controls.Add(this.Bx_time);
+            this.groupBox2.Controls.Add(this.lb_time);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.Box_temp);
-            this.groupBox2.Controls.Add(this.lab_temp);
-            this.groupBox2.Controls.Add(this.lab_izm);
-            this.groupBox2.Controls.Add(this.button_izm);
+            this.groupBox2.Controls.Add(this.Bx_temp);
+            this.groupBox2.Controls.Add(this.lb_temp);
+            this.groupBox2.Controls.Add(this.lb_izmer);
+            this.groupBox2.Controls.Add(this.bt_izmer);
             this.groupBox2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox2.Location = new System.Drawing.Point(338, 158);
             this.groupBox2.Name = "groupBox2";
@@ -333,27 +331,26 @@
             this.label9.TabIndex = 19;
             this.label9.Text = "Расстояние:";
             // 
-            // Box_dist
+            // Bx_distance
             // 
-            this.Box_dist.Enabled = false;
-            this.Box_dist.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Box_dist.Location = new System.Drawing.Point(110, 87);
-            this.Box_dist.Margin = new System.Windows.Forms.Padding(2, 4, 4, 4);
-            this.Box_dist.Name = "Box_dist";
-            this.Box_dist.ReadOnly = true;
-            this.Box_dist.Size = new System.Drawing.Size(110, 22);
-            this.Box_dist.TabIndex = 20;
+            this.Bx_distance.Enabled = false;
+            this.Bx_distance.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Bx_distance.Location = new System.Drawing.Point(110, 87);
+            this.Bx_distance.Margin = new System.Windows.Forms.Padding(2, 4, 4, 4);
+            this.Bx_distance.Name = "Bx_distance";
+            this.Bx_distance.ReadOnly = true;
+            this.Bx_distance.Size = new System.Drawing.Size(110, 22);
+            this.Bx_distance.TabIndex = 20;
             // 
-            // lab_dist
+            // lb_distance
             // 
-            this.lab_dist.AutoSize = true;
-            this.lab_dist.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_dist.Location = new System.Drawing.Point(228, 90);
-            this.lab_dist.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_dist.Name = "lab_dist";
-            this.lab_dist.Size = new System.Drawing.Size(45, 19);
-            this.lab_dist.TabIndex = 21;
-            this.lab_dist.Text = "расст";
+            this.lb_distance.AutoSize = true;
+            this.lb_distance.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_distance.Location = new System.Drawing.Point(228, 90);
+            this.lb_distance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_distance.Name = "lb_distance";
+            this.lb_distance.Size = new System.Drawing.Size(0, 19);
+            this.lb_distance.TabIndex = 21;
             // 
             // label1
             // 
@@ -366,26 +363,25 @@
             this.label1.TabIndex = 16;
             this.label1.Text = "Время:";
             // 
-            // Box_time
+            // Bx_time
             // 
-            this.Box_time.Enabled = false;
-            this.Box_time.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Box_time.Location = new System.Drawing.Point(110, 57);
-            this.Box_time.Margin = new System.Windows.Forms.Padding(2, 4, 4, 4);
-            this.Box_time.Name = "Box_time";
-            this.Box_time.Size = new System.Drawing.Size(110, 22);
-            this.Box_time.TabIndex = 17;
+            this.Bx_time.Enabled = false;
+            this.Bx_time.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Bx_time.Location = new System.Drawing.Point(110, 57);
+            this.Bx_time.Margin = new System.Windows.Forms.Padding(2, 4, 4, 4);
+            this.Bx_time.Name = "Bx_time";
+            this.Bx_time.Size = new System.Drawing.Size(110, 22);
+            this.Bx_time.TabIndex = 17;
             // 
-            // lab_time
+            // lb_time
             // 
-            this.lab_time.AutoSize = true;
-            this.lab_time.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_time.Location = new System.Drawing.Point(228, 60);
-            this.lab_time.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_time.Name = "lab_time";
-            this.lab_time.Size = new System.Drawing.Size(49, 19);
-            this.lab_time.TabIndex = 18;
-            this.lab_time.Text = "время";
+            this.lb_time.AutoSize = true;
+            this.lb_time.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_time.Location = new System.Drawing.Point(228, 60);
+            this.lb_time.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_time.Name = "lb_time";
+            this.lb_time.Size = new System.Drawing.Size(0, 19);
+            this.lb_time.TabIndex = 18;
             // 
             // groupBox3
             // 
@@ -405,11 +401,11 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Результаты:";
             // 
-            // Box_log
+            // rtbLogger
             // 
             this.rtbLogger.Location = new System.Drawing.Point(12, 365);
             this.rtbLogger.Multiline = true;
-            this.rtbLogger.Name = "Box_log";
+            this.rtbLogger.Name = "rtbLogger";
             this.rtbLogger.ReadOnly = true;
             this.rtbLogger.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.rtbLogger.Size = new System.Drawing.Size(646, 200);
@@ -447,12 +443,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbStatus;
-        private System.Windows.Forms.Label lab_statusinst;
+        private System.Windows.Forms.Label lb_Modeinst;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox Box_temp;
-        private System.Windows.Forms.Label lab_temp;
-        private System.Windows.Forms.Label lab_izm;
-        private System.Windows.Forms.Button button_izm;
+        private System.Windows.Forms.TextBox Bx_temp;
+        private System.Windows.Forms.Label lb_temp;
+        private System.Windows.Forms.Label lb_izmer;
+        private System.Windows.Forms.Button bt_izmer;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
@@ -464,11 +460,11 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox Box_time;
-        private System.Windows.Forms.Label lab_time;
+        private System.Windows.Forms.TextBox Bx_time;
+        private System.Windows.Forms.Label lb_time;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox Box_dist;
-        private System.Windows.Forms.Label lab_dist;
+        private System.Windows.Forms.TextBox Bx_distance;
+        private System.Windows.Forms.Label lb_distance;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox rtbLogger;
     }
