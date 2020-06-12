@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboPort = new System.Windows.Forms.ComboBox();
-            this.Button_con = new System.Windows.Forms.Button();
+            this.cbPortsName = new System.Windows.Forms.ComboBox();
+            this.btConnect = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.lab_statuscon = new System.Windows.Forms.Label();
+            this.lbStatus = new System.Windows.Forms.Label();
             this.lab_statusinst = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.Box_temp = new System.Windows.Forms.TextBox();
@@ -57,7 +57,7 @@
             this.Box_time = new System.Windows.Forms.TextBox();
             this.lab_time = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Box_log = new System.Windows.Forms.TextBox();
+            this.rtbLogger = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -65,28 +65,28 @@
             // 
             // comboPort
             // 
-            this.comboPort.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboPort.FormattingEnabled = true;
-            this.comboPort.ItemHeight = 19;
-            this.comboPort.Location = new System.Drawing.Point(11, 48);
-            this.comboPort.Margin = new System.Windows.Forms.Padding(4);
-            this.comboPort.Name = "comboPort";
-            this.comboPort.Size = new System.Drawing.Size(99, 27);
-            this.comboPort.TabIndex = 0;
-            this.comboPort.SelectedIndexChanged += new System.EventHandler(this.comboPort_SelectedIndexChanged);
+            this.cbPortsName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cbPortsName.FormattingEnabled = true;
+            this.cbPortsName.ItemHeight = 19;
+            this.cbPortsName.Location = new System.Drawing.Point(11, 48);
+            this.cbPortsName.Margin = new System.Windows.Forms.Padding(4);
+            this.cbPortsName.Name = "comboPort";
+            this.cbPortsName.Size = new System.Drawing.Size(99, 27);
+            this.cbPortsName.TabIndex = 0;
+            this.cbPortsName.SelectedIndexChanged += new System.EventHandler(this.comboPort_SelectedIndexChanged);
             // 
             // Button_con
             // 
-            this.Button_con.Enabled = false;
-            this.Button_con.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Button_con.Location = new System.Drawing.Point(118, 48);
-            this.Button_con.Margin = new System.Windows.Forms.Padding(4);
-            this.Button_con.Name = "Button_con";
-            this.Button_con.Size = new System.Drawing.Size(105, 29);
-            this.Button_con.TabIndex = 1;
-            this.Button_con.Text = "Соединение";
-            this.Button_con.UseVisualStyleBackColor = true;
-            this.Button_con.Click += new System.EventHandler(this.Button_con_Click);
+            this.btConnect.Enabled = false;
+            this.btConnect.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btConnect.Location = new System.Drawing.Point(118, 48);
+            this.btConnect.Margin = new System.Windows.Forms.Padding(4);
+            this.btConnect.Name = "Button_con";
+            this.btConnect.Size = new System.Drawing.Size(105, 29);
+            this.btConnect.TabIndex = 1;
+            this.btConnect.Text = "Соединение";
+            this.btConnect.UseVisualStyleBackColor = true;
+            this.btConnect.Click += new System.EventHandler(this.Button_con_Click);
             // 
             // label2
             // 
@@ -123,13 +123,13 @@
             // 
             // lab_statuscon
             // 
-            this.lab_statuscon.AutoSize = true;
-            this.lab_statuscon.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_statuscon.Location = new System.Drawing.Point(145, 80);
-            this.lab_statuscon.Margin = new System.Windows.Forms.Padding(2, 0, 4, 0);
-            this.lab_statuscon.Name = "lab_statuscon";
-            this.lab_statuscon.Size = new System.Drawing.Size(0, 19);
-            this.lab_statuscon.TabIndex = 7;
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbStatus.Location = new System.Drawing.Point(145, 80);
+            this.lbStatus.Margin = new System.Windows.Forms.Padding(2, 0, 4, 0);
+            this.lbStatus.Name = "lab_statuscon";
+            this.lbStatus.Size = new System.Drawing.Size(0, 19);
+            this.lbStatus.TabIndex = 7;
             // 
             // lab_statusinst
             // 
@@ -286,10 +286,10 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboPort);
+            this.groupBox1.Controls.Add(this.cbPortsName);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.Button_con);
-            this.groupBox1.Controls.Add(this.lab_statuscon);
+            this.groupBox1.Controls.Add(this.btConnect);
+            this.groupBox1.Controls.Add(this.lbStatus);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lab_statusinst);
@@ -407,20 +407,20 @@
             // 
             // Box_log
             // 
-            this.Box_log.Location = new System.Drawing.Point(12, 365);
-            this.Box_log.Multiline = true;
-            this.Box_log.Name = "Box_log";
-            this.Box_log.ReadOnly = true;
-            this.Box_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Box_log.Size = new System.Drawing.Size(646, 200);
-            this.Box_log.TabIndex = 32;
+            this.rtbLogger.Location = new System.Drawing.Point(12, 365);
+            this.rtbLogger.Multiline = true;
+            this.rtbLogger.Name = "Box_log";
+            this.rtbLogger.ReadOnly = true;
+            this.rtbLogger.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.rtbLogger.Size = new System.Drawing.Size(646, 200);
+            this.rtbLogger.TabIndex = 32;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 571);
-            this.Controls.Add(this.Box_log);
+            this.Controls.Add(this.rtbLogger);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -441,12 +441,12 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboPort;
-        private System.Windows.Forms.Button Button_con;
+        private System.Windows.Forms.ComboBox cbPortsName;
+        private System.Windows.Forms.Button btConnect;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lab_statuscon;
+        private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Label lab_statusinst;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox Box_temp;
@@ -470,7 +470,7 @@
         private System.Windows.Forms.TextBox Box_dist;
         private System.Windows.Forms.Label lab_dist;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox Box_log;
+        private System.Windows.Forms.TextBox rtbLogger;
     }
 }
 
