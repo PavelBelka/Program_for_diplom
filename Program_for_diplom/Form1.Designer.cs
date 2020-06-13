@@ -161,6 +161,7 @@
             this.Bx_temp.Name = "Bx_temp";
             this.Bx_temp.Size = new System.Drawing.Size(110, 22);
             this.Bx_temp.TabIndex = 13;
+            this.Bx_temp.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_common);
             // 
             // lb_temp
             // 
@@ -193,6 +194,7 @@
             this.bt_izmer.TabIndex = 19;
             this.bt_izmer.Text = "Начать измерение";
             this.bt_izmer.UseVisualStyleBackColor = true;
+            this.bt_izmer.Click += new System.EventHandler(this.bt_izmer_Click);
             // 
             // label16
             // 
@@ -372,6 +374,7 @@
             this.Bx_time.Name = "Bx_time";
             this.Bx_time.Size = new System.Drawing.Size(110, 22);
             this.Bx_time.TabIndex = 17;
+            this.Bx_time.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPress_common);
             // 
             // lb_time
             // 
