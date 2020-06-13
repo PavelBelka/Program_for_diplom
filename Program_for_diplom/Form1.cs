@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
+using Timer = System.Threading.Timer;
 
 namespace Program_for_diplom
 {
@@ -71,16 +72,7 @@ namespace Program_for_diplom
         {
             while (true)
             {
-                Managment("distance");
-                readCommand(3);
-                if (_readBuffer[0] == 88)
-                {
-                    distance = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
-                }
-                else
-                {
-                    distance = 0;
-                }
+                Distance();
                 lb_distance.Text = distance.ToString();
                 Write_uart(Convert.ToByte('H'), Convert.ToByte('H'), Convert.ToByte('H'));
                 readCommand(3);
@@ -88,9 +80,25 @@ namespace Program_for_diplom
                 {
                     break;
                 }
-                Thread.Sleep(125);
+                Thread.Sleep(200);
+                //Application.DoEvents();
             }
             lb_izmer.Text = "Разогрев проволоки.";
+        }
+
+        private void Distance()
+        {
+            Managment("distance");
+            readCommand(3);
+            if (_readBuffer[0] == 88)
+            {
+                distance = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+            }
+            else
+            {
+                distance = 0;
+            }
+            Thread.Sleep(125);
         }
 
         private void Connect(string name)
@@ -102,7 +110,7 @@ namespace Program_for_diplom
             _comport.StopBits = StopBits.One;
             _comport.ReadTimeout = 5000;
             _comport.WriteTimeout = 500;
-            _comport.DataReceived += Comport_DataReceived;
+            //_comport.DataReceived += Comport_DataReceived;
             rtbLogger.AppendText("Параметры порта:\r\nСкорость передачи:" + _comport.BaudRate.ToString() + "\r\n");
             rtbLogger.AppendText("Длина данных:" + _comport.DataBits.ToString() + "\r\n");
             rtbLogger.AppendText("Параметры порта: отсутсвует\r\nКоличество stop-битов: 1\r\n");
@@ -150,7 +158,7 @@ namespace Program_for_diplom
                     break;
                 }
             }*/
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             readCommand(3);
             rtbLogger.AppendText(Data);
             if ((_readBuffer[0] == 65) && (_readBuffer[1] == 86) && (_readBuffer[2] == 69))
@@ -174,7 +182,7 @@ namespace Program_for_diplom
         private void Managment(string action)
         {
             Write_uart(Convert.ToByte('I'), Convert.ToByte('I'), Convert.ToByte('I'));
-            Thread.Sleep(10);
+            Thread.Sleep(500);
             switch(action)
             {
                 case "preparation_null":
@@ -253,27 +261,6 @@ namespace Program_for_diplom
             rtbLogger.AppendText("Отправление команды на устройство:\r\n");
             rtbLogger.AppendText(comand.ToString() + " " + data1.ToString() + " " + data2.ToString() + "\r\n");
             _comport.Write(_writeBuffer, 0, 3);
-        }
-
-        private void Comport_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            try
-            {
-                Data = "Чтение ответа:\r\n";
-                int bufferSize = _comport.BytesToRead;
-                if (bufferSize == 3)
-                {
-                    readCommand(bufferSize);
-                }
-                else
-                {
-                    bufferSizeError();
-                }
-            }
-            catch (TimeoutException)
-            {
-                timeOutError();
-            }
         }
 
         private void readCommand(int bufferSize)
