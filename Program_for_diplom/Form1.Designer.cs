@@ -44,10 +44,10 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.lab_deep = new System.Windows.Forms.Label();
-            this.lab_flame_height = new System.Windows.Forms.Label();
-            this.lab_flame_weight = new System.Windows.Forms.Label();
-            this.lab_flame_square = new System.Windows.Forms.Label();
+            this.lb_deep = new System.Windows.Forms.Label();
+            this.lb_flame_height = new System.Windows.Forms.Label();
+            this.lb_flame_weight = new System.Windows.Forms.Label();
+            this.lb_flame_square = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -240,49 +240,45 @@
             this.label19.TabIndex = 24;
             this.label19.Text = "Площадь пламени:";
             // 
-            // lab_deep
+            // lb_deep
             // 
-            this.lab_deep.AutoSize = true;
-            this.lab_deep.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_deep.Location = new System.Drawing.Point(150, 25);
-            this.lab_deep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_deep.Name = "lab_deep";
-            this.lab_deep.Size = new System.Drawing.Size(30, 19);
-            this.lab_deep.TabIndex = 25;
-            this.lab_deep.Text = "ога";
+            this.lb_deep.AutoSize = true;
+            this.lb_deep.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_deep.Location = new System.Drawing.Point(150, 25);
+            this.lb_deep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_deep.Name = "lb_deep";
+            this.lb_deep.Size = new System.Drawing.Size(0, 19);
+            this.lb_deep.TabIndex = 25;
             // 
-            // lab_flame_height
+            // lb_flame_height
             // 
-            this.lab_flame_height.AutoSize = true;
-            this.lab_flame_height.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_flame_height.Location = new System.Drawing.Point(150, 44);
-            this.lab_flame_height.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_flame_height.Name = "lab_flame_height";
-            this.lab_flame_height.Size = new System.Drawing.Size(30, 19);
-            this.lab_flame_height.TabIndex = 26;
-            this.lab_flame_height.Text = "ога";
+            this.lb_flame_height.AutoSize = true;
+            this.lb_flame_height.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_flame_height.Location = new System.Drawing.Point(150, 44);
+            this.lb_flame_height.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_flame_height.Name = "lb_flame_height";
+            this.lb_flame_height.Size = new System.Drawing.Size(0, 19);
+            this.lb_flame_height.TabIndex = 26;
             // 
-            // lab_flame_weight
+            // lb_flame_weight
             // 
-            this.lab_flame_weight.AutoSize = true;
-            this.lab_flame_weight.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_flame_weight.Location = new System.Drawing.Point(150, 63);
-            this.lab_flame_weight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_flame_weight.Name = "lab_flame_weight";
-            this.lab_flame_weight.Size = new System.Drawing.Size(30, 19);
-            this.lab_flame_weight.TabIndex = 27;
-            this.lab_flame_weight.Text = "ога";
+            this.lb_flame_weight.AutoSize = true;
+            this.lb_flame_weight.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_flame_weight.Location = new System.Drawing.Point(150, 63);
+            this.lb_flame_weight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_flame_weight.Name = "lb_flame_weight";
+            this.lb_flame_weight.Size = new System.Drawing.Size(0, 19);
+            this.lb_flame_weight.TabIndex = 27;
             // 
-            // lab_flame_square
+            // lb_flame_square
             // 
-            this.lab_flame_square.AutoSize = true;
-            this.lab_flame_square.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lab_flame_square.Location = new System.Drawing.Point(150, 82);
-            this.lab_flame_square.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lab_flame_square.Name = "lab_flame_square";
-            this.lab_flame_square.Size = new System.Drawing.Size(30, 19);
-            this.lab_flame_square.TabIndex = 28;
-            this.lab_flame_square.Text = "ога";
+            this.lb_flame_square.AutoSize = true;
+            this.lb_flame_square.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_flame_square.Location = new System.Drawing.Point(150, 82);
+            this.lb_flame_square.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lb_flame_square.Name = "lb_flame_square";
+            this.lb_flame_square.Size = new System.Drawing.Size(0, 19);
+            this.lb_flame_square.TabIndex = 28;
             // 
             // groupBox1
             // 
@@ -391,11 +387,11 @@
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.label18);
-            this.groupBox3.Controls.Add(this.lab_flame_square);
+            this.groupBox3.Controls.Add(this.lb_flame_square);
             this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Controls.Add(this.lab_flame_weight);
-            this.groupBox3.Controls.Add(this.lab_deep);
-            this.groupBox3.Controls.Add(this.lab_flame_height);
+            this.groupBox3.Controls.Add(this.lb_flame_weight);
+            this.groupBox3.Controls.Add(this.lb_deep);
+            this.groupBox3.Controls.Add(this.lb_flame_height);
             this.groupBox3.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
@@ -456,10 +452,10 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label lab_deep;
-        private System.Windows.Forms.Label lab_flame_height;
-        private System.Windows.Forms.Label lab_flame_weight;
-        private System.Windows.Forms.Label lab_flame_square;
+        private System.Windows.Forms.Label lb_deep;
+        private System.Windows.Forms.Label lb_flame_height;
+        private System.Windows.Forms.Label lb_flame_weight;
+        private System.Windows.Forms.Label lb_flame_square;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;

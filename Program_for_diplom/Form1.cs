@@ -73,6 +73,7 @@ namespace Program_for_diplom
             else
             {
                 step_measurement = 0;
+                Managment("measuring");
                 Measurement();
             }
         }
@@ -96,7 +97,7 @@ namespace Program_for_diplom
             lb_izmer.Text = "Разогрев проволоки.";
             temperature = Convert.ToInt16(Bx_temp.Text);
             time = Convert.ToInt32(Bx_time.Text);
-            Write_uart(Convert.ToByte('C'), (byte)(temperature >> 8), (byte)(temperature & 0xFF));
+            Write_uart(Convert.ToByte('C'), (byte)(temperature & 0xFF), (byte)((temperature >> 8) & 0xFF));
             Thread.Sleep(100);
             Managment("pid");
             while (true)
@@ -105,7 +106,7 @@ namespace Program_for_diplom
                 readCommand(3);
                 if (_readBuffer[0] == 87)
                 {
-                    temperature_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+                    temperature_current = (short)(((_readBuffer[1] << 8) | _readBuffer[2]) >> 4);
                 }
                 else
                 {
@@ -126,20 +127,35 @@ namespace Program_for_diplom
 
         private void Measurement()
         {
-            Managment("temperature");
-            readCommand(3);
-            if (_readBuffer[0] == 87)
+            Update_status();
+            int steps = (int)(time / 0.5);
+            for (int i = 0; i < steps; i++)
             {
-                temperature_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
-                lb_temp.Text = temperature_current.ToString();
+                Managment("temperature");
+                readCommand(3);
+                if (_readBuffer[0] == 87)
+                {
+                    temperature_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+                    lb_temp.Text = temperature_current.ToString();
+                }
+                Managment("distance");
+                readCommand(3);
+                if (_readBuffer[0] == 88)
+                {
+                    distance_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+                }
+                lb_distance.Text = distance_current.ToString();
+                Thread.Sleep(500);
             }
-            Managment("distance");
-            readCommand(3);
-            if (_readBuffer[0] == 88)
-            {
-                distance_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
-            }
-            lb_distance.Text = distance_current.ToString();
+            Managment("idle");
+            result();
+        }
+
+        private void result()
+        {
+            short deep = (short)Math.Abs(distance - distance_current);
+            Update_status();
+            lb_deep.Text = deep.ToString();
         }
 
         private void Distance()
@@ -266,10 +282,6 @@ namespace Program_for_diplom
                     lb_Modeinst.Text = "остановлен";
                     lb_Modeinst.ForeColor = Color.Red;
                 }
-                if ((_readBuffer[2] & 0b01000000) == 0b01000000)
-                {
-                    //status = "Button_CONFIRM";
-                }
                 if ((_readBuffer[2] & 0b00100000) == 0b00100000)
                 {
                     lb_Modeinst.Text = "без действия";
@@ -289,7 +301,6 @@ namespace Program_for_diplom
                 {
                     lb_Modeinst.Text = "авария";
                     lb_Modeinst.ForeColor = Color.Red;
-                    //status = "Crash";
                 }
             }
             else
