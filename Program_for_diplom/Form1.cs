@@ -13,7 +13,8 @@ namespace Program_for_diplom
         private byte[] _writeBuffer = new byte[3];
         private byte[] _readBuffer = new byte[3];
         private bool _readFlag, _connectionFlag, _buttonClickFlag = false;
-        short distance = 0;
+        short distance,temperature, temperature_current, distance_current = 0;
+        int time, step_measurement = 0;
 
         public string Data { get; set; } = "0";
 
@@ -61,29 +62,84 @@ namespace Program_for_diplom
 
         private void bt_izmer_Click(object sender, EventArgs e)
         {
-            lb_izmer.Text = "Выставьте\"0\" точку.";
-            Managment("preparation_null");
-            Thread.Sleep(100);
-            Update_status();
-            Meausuring();
+            if (step_measurement == 0)
+            {
+                lb_izmer.Text = "Выставьте\"0\" точку.";
+                Managment("preparation_null");
+                Thread.Sleep(125);
+                Update_status();
+                Preparation_for_measurement();
+            }
+            else
+            {
+                step_measurement = 0;
+                Measurement();
+            }
         }
 
-        private void Meausuring()
+        private void Preparation_for_measurement()
         {
             while (true)
             {
                 Distance();
-                lb_distance.Text = distance.ToString();
+                Bx_distance.Text = distance.ToString();
                 Write_uart(Convert.ToByte('H'), Convert.ToByte('H'), Convert.ToByte('H'));
                 readCommand(3);
                 if ((_readBuffer[0] == 85) &&  ((_readBuffer[2] & 0b01000000) == 0b01000000))
                 {
                     break;
                 }
-                Thread.Sleep(200);
-                //Application.DoEvents();
+                Thread.Sleep(125);
+                Application.DoEvents();
             }
+            Write_uart(Convert.ToByte('I'), Convert.ToByte('I'), Convert.ToByte('I'));
             lb_izmer.Text = "Разогрев проволоки.";
+            temperature = Convert.ToInt16(Bx_temp.Text);
+            time = Convert.ToInt32(Bx_time.Text);
+            Write_uart(Convert.ToByte('C'), (byte)(temperature >> 8), (byte)(temperature & 0xFF));
+            Thread.Sleep(100);
+            Managment("pid");
+            while (true)
+            {
+                Managment("temperature");
+                readCommand(3);
+                if (_readBuffer[0] == 87)
+                {
+                    temperature_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+                }
+                else
+                {
+                    temperature_current = 0;
+                }
+                if (temperature_current == temperature)
+                {
+                    break;
+                }
+                lb_temp.Text = temperature_current.ToString();
+                Thread.Sleep(125);
+                Application.DoEvents();
+            }
+            lb_izmer.Text = "Проволока разогрета. Нажмите кнопку для начала измерения";
+            bt_izmer.Text = "Измерение";
+            step_measurement = 1;
+        }
+
+        private void Measurement()
+        {
+            Managment("temperature");
+            readCommand(3);
+            if (_readBuffer[0] == 87)
+            {
+                temperature_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+                lb_temp.Text = temperature_current.ToString();
+            }
+            Managment("distance");
+            readCommand(3);
+            if (_readBuffer[0] == 88)
+            {
+                distance_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+            }
+            lb_distance.Text = distance_current.ToString();
         }
 
         private void Distance()
@@ -98,7 +154,6 @@ namespace Program_for_diplom
             {
                 distance = 0;
             }
-            Thread.Sleep(125);
         }
 
         private void Connect(string name)
@@ -110,7 +165,6 @@ namespace Program_for_diplom
             _comport.StopBits = StopBits.One;
             _comport.ReadTimeout = 5000;
             _comport.WriteTimeout = 500;
-            //_comport.DataReceived += Comport_DataReceived;
             rtbLogger.AppendText("Параметры порта:\r\nСкорость передачи:" + _comport.BaudRate.ToString() + "\r\n");
             rtbLogger.AppendText("Длина данных:" + _comport.DataBits.ToString() + "\r\n");
             rtbLogger.AppendText("Параметры порта: отсутсвует\r\nКоличество stop-битов: 1\r\n");
@@ -152,12 +206,6 @@ namespace Program_for_diplom
         {
             rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
             Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
-            /*while (true) { короч тут нихуа не работает
-                if (_readFlag) {
-                    _readFlag = false;
-                    break;
-                }
-            }*/
             Thread.Sleep(100);
             readCommand(3);
             rtbLogger.AppendText(Data);
