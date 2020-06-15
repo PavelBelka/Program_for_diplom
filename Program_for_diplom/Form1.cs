@@ -97,7 +97,7 @@ namespace Program_for_diplom
             lb_izmer.Text = "Разогрев проволоки.";
             temperature = Convert.ToInt16(Bx_temp.Text);
             time = Convert.ToInt32(Bx_time.Text);
-            Write_uart(Convert.ToByte('C'), (byte)(temperature & 0xFF), (byte)((temperature >> 8) & 0xFF));
+            Write_uart(Convert.ToByte('C'), (byte)(temperature >> 8), (byte)(temperature & 0xFF));
             Thread.Sleep(100);
             Managment("pid");
             while (true)
@@ -135,7 +135,7 @@ namespace Program_for_diplom
                 readCommand(3);
                 if (_readBuffer[0] == 87)
                 {
-                    temperature_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
+                    temperature_current = (short)(((_readBuffer[1] << 8) | _readBuffer[2]) >> 4);
                     lb_temp.Text = temperature_current.ToString();
                 }
                 Managment("distance");
@@ -146,6 +146,7 @@ namespace Program_for_diplom
                 }
                 lb_distance.Text = distance_current.ToString();
                 Thread.Sleep(500);
+                Application.DoEvents();
             }
             Managment("idle");
             result();
