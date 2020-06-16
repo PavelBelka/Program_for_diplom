@@ -57,6 +57,9 @@ namespace Program_for_diplom
                 lbStatus.ForeColor = Color.Red;
                 _connectionFlag = false;
                 _comport.Close();
+                bt_izmer.Enabled = false;
+                lb_Modeinst.Text = "";
+                Clear_res();
             }
         }
 
@@ -64,6 +67,7 @@ namespace Program_for_diplom
         {
             if (step_measurement == 0)
             {
+                Clear_res();
                 lb_izmer.Text = "Выставьте\"0\" точку.";
                 Managment("preparation_null");
                 Thread.Sleep(125);
@@ -120,7 +124,7 @@ namespace Program_for_diplom
                 Thread.Sleep(125);
                 Application.DoEvents();
             }
-            lb_izmer.Text = "Проволока разогрета. Нажмите кнопку для начала измерения";
+            lb_izmer.Text = "Проволока разогрета. Нажмите кнопку";
             bt_izmer.Text = "Измерение";
             step_measurement = 1;
         }
@@ -128,6 +132,8 @@ namespace Program_for_diplom
         private void Measurement()
         {
             Update_status();
+            lb_izmer.Text = "Првродится процесс измерения";
+            bt_izmer.Enabled = false;
             int steps = (int)(time / 0.5);
             for (int i = 0; i < steps; i++)
             {
@@ -154,6 +160,10 @@ namespace Program_for_diplom
 
         private void result()
         {
+            lb_izmer.Text = "";
+            bt_izmer.Text = "Начать измерение";
+            bt_izmer.Enabled = true;
+            step_measurement = 0;
             short deep = (short)Math.Abs(distance - distance_current);
             Update_status();
             lb_deep.Text = deep.ToString();
@@ -171,6 +181,17 @@ namespace Program_for_diplom
             {
                 distance = 0;
             }
+        }
+
+        private void Clear_res()
+        {
+            lb_deep.Text = "";
+            lb_distance.Text = "";
+            lb_flame_height.Text = "";
+            lb_flame_square.Text = "";
+            lb_flame_weight.Text = "";
+            lb_izmer.Text = "";
+            lb_temp.Text = "";
         }
 
         private void Connect(string name)
