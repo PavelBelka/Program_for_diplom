@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
 using Timer = System.Threading.Timer;
+using System.IO;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Program_for_diplom
 {
@@ -15,6 +18,8 @@ namespace Program_for_diplom
         private bool _readFlag, _connectionFlag, _buttonClickFlag = false;
         short distance,temperature, temperature_current, distance_current = 0;
         int time, step_measurement = 0;
+        string path = "";
+        static string technical_Path = @"t_data.json";
 
         public string Data { get; set; } = "0";
 
@@ -26,6 +31,9 @@ namespace Program_for_diplom
             cbPortsName.Items.AddRange(portNames);
             lbStatus.ForeColor = Color.Red;
             lbStatus.Text = "Не подключено";
+            if(!File.Exists(technical_Path)){
+                File.Create(technical_Path).Close();
+            }
         }
 
         private void comboPort_SelectedIndexChanged(object sender, EventArgs e)
@@ -84,6 +92,12 @@ namespace Program_for_diplom
 
         private void Preparation_for_measurement()
         {
+            rtbLogger.AppendText("Подготовка к измерению:\r\n");
+            rtbLogger.AppendText("Создание папки.\r\n");
+            Create_folder();
+            File.Create(path + "/Result.txt").Close();
+            string seriliazed = JsonConvert.SerializeObject(path);
+            File.WriteAllText(technical_Path, seriliazed);
             while (true)
             {
                 Distance();
@@ -99,6 +113,7 @@ namespace Program_for_diplom
             }
             Write_uart(Convert.ToByte('I'), Convert.ToByte('I'), Convert.ToByte('I'));
             lb_izmer.Text = "Разогрев проволоки.";
+            rtbLogger.AppendText("Разогрев проволоки:\r\n");
             temperature = Convert.ToInt16(Bx_temp.Text);
             time = Convert.ToInt32(Bx_time.Text);
             Write_uart(Convert.ToByte('C'), (byte)(temperature >> 8), (byte)(temperature & 0xFF));
@@ -132,11 +147,13 @@ namespace Program_for_diplom
         private void Measurement()
         {
             Update_status();
+            Stopwatch watch = new Stopwatch();
             lb_izmer.Text = "Првродится процесс измерения";
             bt_izmer.Enabled = false;
             int steps = (int)(time / 0.5);
             for (int i = 0; i < steps; i++)
             {
+                watch.Start();
                 Managment("temperature");
                 readCommand(3);
                 if (_readBuffer[0] == 87)
@@ -151,14 +168,22 @@ namespace Program_for_diplom
                     distance_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
                 }
                 lb_distance.Text = distance_current.ToString();
-                Thread.Sleep(500);
+                watch.Stop();
+                if (500 > (500 - watch.ElapsedMilliseconds))
+                {
+                    Thread.Sleep(500 - (int)watch.ElapsedMilliseconds);
+                }
+                else
+                {
+                    Thread.Sleep(1);
+                }
                 Application.DoEvents();
             }
             Managment("idle");
-            result();
+            Result();
         }
 
-        private void result()
+        private void Result()
         {
             lb_izmer.Text = "";
             bt_izmer.Text = "Начать измерение";
@@ -167,6 +192,7 @@ namespace Program_for_diplom
             short deep = (short)Math.Abs(distance - distance_current);
             Update_status();
             lb_deep.Text = deep.ToString();
+            Write_uart(Convert.ToByte('K'), Convert.ToByte('K'), Convert.ToByte('K'));
         }
 
         private void Distance()
@@ -192,6 +218,17 @@ namespace Program_for_diplom
             lb_flame_weight.Text = "";
             lb_izmer.Text = "";
             lb_temp.Text = "";
+        }
+
+        private void Create_folder()
+        {
+            DateTime date = DateTime.Now;
+            path = AppDomain.CurrentDomain.BaseDirectory + date.ToString("dd.MM.yyyy_HH_mm");
+            DirectoryInfo folder = new DirectoryInfo(path);
+            if (!folder.Exists)
+            {
+                folder.Create();
+            }
         }
 
         private void Connect(string name)
