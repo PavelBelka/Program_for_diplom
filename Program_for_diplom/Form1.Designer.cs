@@ -58,9 +58,11 @@
             this.lb_time = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rtbLogger = new System.Windows.Forms.TextBox();
+            this.picture_result = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picture_result)).BeginInit();
             this.SuspendLayout();
             // 
             // cbPortsName
@@ -384,6 +386,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.picture_result);
             this.groupBox3.Controls.Add(this.label16);
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.label18);
@@ -410,6 +413,14 @@
             this.rtbLogger.Size = new System.Drawing.Size(646, 200);
             this.rtbLogger.TabIndex = 32;
             // 
+            // picture_result
+            // 
+            this.picture_result.Location = new System.Drawing.Point(6, 104);
+            this.picture_result.Name = "picture_result";
+            this.picture_result.Size = new System.Drawing.Size(308, 236);
+            this.picture_result.TabIndex = 29;
+            this.picture_result.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -429,6 +440,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picture_result)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -466,6 +478,7 @@
         private System.Windows.Forms.Label lb_distance;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox rtbLogger;
+        private System.Windows.Forms.PictureBox picture_result;
     }
 }
 
