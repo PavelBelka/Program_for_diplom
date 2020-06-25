@@ -57,8 +57,8 @@
             this.Bx_time = new System.Windows.Forms.TextBox();
             this.lb_time = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.rtbLogger = new System.Windows.Forms.TextBox();
             this.picture_result = new System.Windows.Forms.PictureBox();
+            this.rtbLogger = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -196,7 +196,7 @@
             this.bt_izmer.TabIndex = 19;
             this.bt_izmer.Text = "Начать измерение";
             this.bt_izmer.UseVisualStyleBackColor = true;
-            this.bt_izmer.Click += new System.EventHandler(this.bt_izmer_Click);
+            this.bt_izmer.Click += new System.EventHandler(this.Bt_izmer_Click);
             // 
             // label16
             // 
@@ -403,6 +403,14 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Результаты:";
             // 
+            // picture_result
+            // 
+            this.picture_result.Location = new System.Drawing.Point(6, 104);
+            this.picture_result.Name = "picture_result";
+            this.picture_result.Size = new System.Drawing.Size(308, 236);
+            this.picture_result.TabIndex = 29;
+            this.picture_result.TabStop = false;
+            // 
             // rtbLogger
             // 
             this.rtbLogger.Location = new System.Drawing.Point(12, 365);
@@ -412,14 +420,6 @@
             this.rtbLogger.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.rtbLogger.Size = new System.Drawing.Size(646, 200);
             this.rtbLogger.TabIndex = 32;
-            // 
-            // picture_result
-            // 
-            this.picture_result.Location = new System.Drawing.Point(6, 104);
-            this.picture_result.Name = "picture_result";
-            this.picture_result.Size = new System.Drawing.Size(308, 236);
-            this.picture_result.TabIndex = 29;
-            this.picture_result.TabStop = false;
             // 
             // Form1
             // 

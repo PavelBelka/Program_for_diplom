@@ -31,3 +31,7 @@ C:\Users\bears\OneDrive\Документы\GitHub\Program_for_diplom\Program_for
 F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Newtonsoft.Json.dll
 F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Newtonsoft.Json.xml
 F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\obj\Debug\Program_for_diplom.csproj.CopyComplete
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Emgu.CV.Platform.NetFramework.dll
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Emgu.CV.Platform.NetStandard.dll
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Emgu.CV.Platform.NetFramework.xml
+F:\документы\Белка\Проекты\Установка для испытаний материалов на пожароопасность\program\Program_for_diplom\Program_for_diplom\bin\Debug\Emgu.CV.Platform.NetStandard.xml

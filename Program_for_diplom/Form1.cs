@@ -4,23 +4,43 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
 using System.IO;
-using Newtonsoft.Json;
 using System.Diagnostics;
-using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace Program_for_diplom
 {
-    public partial class Form1 : Form
+    public interface IForm1
+    { 
+        string[] portNames { set; }
+        string portName { get; }
+        string temperature { get; }
+        string time { get; }
+        string distance { set; }
+        string temperature_current { set; }
+        string distance_current { set; }
+        string measur_status { set; }
+        string status_connect { set; }
+        string status_installation { set; }
+        string deep { set; }
+        string flame_height { set; }
+        string flame_width { set; }
+        string flame_square { set; }
+        event EventHandler Bt_con;
+        event EventHandler Bt_izmer;
+    }
+
+    public partial class Form1 : Form, IForm1
     {
         private SerialPort _comport = new SerialPort();
         private byte[] _writeBuffer = new byte[3];
         private byte[] _readBuffer = new byte[3];
         private bool _readFlag, _connectionFlag = false;
-        short distance,temperature, temperature_current, distance_current = 0;
-        int time, step_measurement = 0;
+        //short distance, temperature, temperature_current, distance_current = 0;
+        int step_measurement = 0;
         string path = "";
         static string technical_Path = @"t_data.txt";
-        string[] result = new string[3];
+        List<Mat> frames;
+        List<ImageProcessingResult> results;
 
         public string Data { get; set; } = "0";
 
@@ -32,9 +52,66 @@ namespace Program_for_diplom
             cbPortsName.Items.AddRange(portNames);
             lbStatus.ForeColor = Color.Red;
             lbStatus.Text = "Не подключено";
-            if(!File.Exists(technical_Path)){
+            if (!File.Exists(technical_Path))
+            {
                 File.Create(technical_Path).Close();
             }
+        }
+
+        public string[] portNames{
+            set { cbPortsName.Items.AddRange(value); }
+        }
+
+        public string portName{
+            get { return cbPortsName.SelectedItem.ToString(); }
+        }
+
+        public string temperature{
+            get { return Bx_temp.Text; }
+        }
+
+        public string time{
+            get { return Bx_time.Text; }
+        }
+
+        public string distance{
+            set { Bx_distance.Text = value; }
+        }
+
+        public string temperature_current{
+            set { lb_temp.Text = value; }
+        }
+
+        public string distance_current{
+            set { lb_distance.Text = value; }
+        }
+
+        public string measur_status{
+            set { lb_izmer.Text = value; }
+        }
+
+        public string status_connect{
+            set { lbStatus.Text = value; }
+        }
+
+        public string status_installation{
+            set { lb_Modeinst.Text = value; }
+        }
+
+        public string deep{
+            set { lb_deep.Text = value; }
+        }
+
+        public string flame_height{
+            set { lb_flame_height.Text = value; }
+        }
+
+        public string flame_width{
+            set { lb_flame_weight.Text = value; }
+        }
+
+        public string flame_square{
+            set { lb_flame_square.Text = value; }
         }
 
         private void comboPort_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,26 +130,14 @@ namespace Program_for_diplom
 
         private void Button_con_Click(object sender, EventArgs e)
         {
-            if (_connectionFlag == false){
-                string portName = cbPortsName.SelectedItem.ToString();
-                rtbLogger.AppendText("Выбран порт: " + portName + "\r\n");
-                Connect(portName);
-            }
-            else if (_connectionFlag == true){
-                btConnect.Text = "Соединение";
-                lbStatus.Text = "Не подключено";
-                lbStatus.ForeColor = Color.Red;
-                _connectionFlag = false;
-                _comport.Close();
-                bt_izmer.Enabled = false;
-                lb_Modeinst.Text = "";
-                Clear_res();
-            }
+            if (Bt_con != null) Bt_con(this, EventArgs.Empty);
         }
 
         private void bt_izmer_Click(object sender, EventArgs e)
         {
-            if (step_measurement == 0){
+            if (Bt_izmer != null) Bt_izmer(this, EventArgs.Empty);
+            if (step_measurement == 0)
+            {
                 Clear_res();
                 lb_izmer.Text = "Выставьте\"0\" точку.";
                 Managment("preparation_null");
@@ -80,12 +145,17 @@ namespace Program_for_diplom
                 Update_status();
                 Preparation_for_measurement();
             }
-            else{
+            else
+            {
                 step_measurement = 0;
                 Managment("measuring");
                 Measurement();
             }
         }
+
+        public event EventHandler Bt_con;
+        public event EventHandler Bt_izmer;
+
 
         private void Preparation_for_measurement()
         {
@@ -98,12 +168,14 @@ namespace Program_for_diplom
             StreamWriter sw = new StreamWriter(technical_Path, false, System.Text.Encoding.Default);
             sw.WriteLine(path + ", " + time.ToString());
             sw.Close();
-            while (true){
+            while (true)
+            {
                 Distance();
                 Bx_distance.Text = distance.ToString();
                 Write_uart(Convert.ToByte('H'), Convert.ToByte('H'), Convert.ToByte('H'));
                 readCommand(3);
-                if ((_readBuffer[0] == 85) &&  ((_readBuffer[2] & 0b01000000) == 0b01000000)){
+                if ((_readBuffer[0] == 85) && ((_readBuffer[2] & 0b01000000) == 0b01000000))
+                {
                     break;
                 }
                 Thread.Sleep(125);
@@ -119,13 +191,16 @@ namespace Program_for_diplom
             {
                 Managment("temperature");
                 readCommand(3);
-                if (_readBuffer[0] == 87){
+                if (_readBuffer[0] == 87)
+                {
                     temperature_current = (short)(((_readBuffer[1] << 8) | _readBuffer[2]) >> 4);
                 }
-                else{
+                else
+                {
                     temperature_current = 0;
                 }
-                if (temperature_current == temperature){
+                if (temperature_current == temperature)
+                {
                     break;
                 }
                 lb_temp.Text = temperature_current.ToString();
@@ -150,32 +225,47 @@ namespace Program_for_diplom
                 watch.Start();
                 Managment("temperature");
                 readCommand(3);
-                if (_readBuffer[0] == 87){
+                if (_readBuffer[0] == 87)
+                {
                     temperature_current = (short)(((_readBuffer[1] << 8) | _readBuffer[2]) >> 4);
                     lb_temp.Text = temperature_current.ToString();
                 }
                 Managment("distance");
                 readCommand(3);
-                if (_readBuffer[0] == 88){
+                if (_readBuffer[0] == 88)
+                {
                     distance_current = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
                 }
                 lb_distance.Text = distance_current.ToString();
+                frames.Add(GetFrame(1, i));
                 watch.Stop();
-                if (i == 0){
+                if (i == 0)
+                {
                     steps = (int)((time * 1000) / (int)watch.ElapsedMilliseconds);
                 }
-                else{
+                else
+                {
                     Thread.Sleep(1);
                 }
                 Application.DoEvents();
             }
             Managment("idle");
             lb_izmer.Text = "Ожидание обработки изображения";
-            Thread.Sleep(60000);
-            Result();
+            double max_height = 0;
+            int index = 0;
+            for (int i = 0; i < steps; i++)
+            {
+                results.Add(FrameAnalysis(frames[i], i, 0.125));
+                if (results[i].Height > max_height)
+                {
+                    max_height = results[i].Height;
+                    index = i;
+                }
+            }
+            Result(index);
         }
 
-        private void Result()
+        private void Result(int ind)
         {
             lb_izmer.Text = "";
             bt_izmer.Text = "Начать измерение";
@@ -184,13 +274,10 @@ namespace Program_for_diplom
             short deep = (short)Math.Abs(distance - distance_current);
             Update_status();
             lb_deep.Text = deep.ToString();
-            StreamReader sr = new StreamReader(path + "/Result.txt");
-            string line = sr.ReadLine();
-            result = line.Split(';');
-            lb_flame_height.Text = result[0].ToString();
-            lb_flame_weight.Text = result[1].ToString();
-            lb_flame_square.Text = result[2].ToString();
-            picture_result.Image = Image.FromFile(path + "/19/counters_1.png");
+            lb_flame_height.Text = results[ind].Height.ToString();
+            lb_flame_weight.Text = results[ind].Width.ToString();
+            lb_flame_square.Text = results[ind].Area.ToString();
+            picture_result.Image = results[ind].Image.ToImage<Bgr, Byte>().ToBitmap();
             picture_result.SizeMode = PictureBoxSizeMode.Zoom;
             Write_uart(Convert.ToByte('K'), Convert.ToByte('K'), Convert.ToByte('K'));
         }
@@ -199,10 +286,12 @@ namespace Program_for_diplom
         {
             Managment("distance");
             readCommand(3);
-            if (_readBuffer[0] == 88){
+            if (_readBuffer[0] == 88)
+            {
                 distance = (short)((_readBuffer[1] << 8) | _readBuffer[2]);
             }
-            else{
+            else
+            {
                 distance = 0;
             }
         }
@@ -223,7 +312,8 @@ namespace Program_for_diplom
             DateTime date = DateTime.Now;
             path = AppDomain.CurrentDomain.BaseDirectory + date.ToString("dd.MM.yyyy_HH_mm");
             DirectoryInfo folder = new DirectoryInfo(path);
-            if (!folder.Exists){
+            if (!folder.Exists)
+            {
                 folder.Create();
             }
         }
@@ -239,171 +329,10 @@ namespace Program_for_diplom
             Process process = Process.Start(start);
         }
 
-        private void Connect(string name)
+        private void Bt_izmer_Click(object sender, EventArgs e)
         {
-            _comport.PortName = name;
-            _comport.BaudRate = 38400;
-            _comport.DataBits = 8;
-            _comport.Parity = Parity.None;
-            _comport.StopBits = StopBits.One;
-            _comport.ReadTimeout = 5000;
-            _comport.WriteTimeout = 500;
-            rtbLogger.AppendText("Параметры порта:\r\nСкорость передачи:" + _comport.BaudRate.ToString() + "\r\n");
-            rtbLogger.AppendText("Длина данных:" + _comport.DataBits.ToString() + "\r\n");
-            rtbLogger.AppendText("Параметры порта: отсутсвует\r\nКоличество stop-битов: 1\r\n");
-            rtbLogger.AppendText("Таймаут: 2с\r\nСоединение...\r\n");
-            try{
-                _comport.Open();
-                if (_comport.IsOpen == true){
-                    rtbLogger.AppendText("Порт открыт. Отправка запроса устройству:\r\n");
-                    for (int i = 1; i < 4; i++){
-                        tryToConnect(i);
-                        if (_connectionFlag){
-                            break;
-                        }
-                    }
-                    if (!_connectionFlag)
-                    {
-                        rtbLogger.AppendText("Подключено неизвестное устройство. Переподключите еще раз или выберите другой порт.\r\n");
-                        _comport.Close();
-                    }
-                }
-                else
-                {
-                    rtbLogger.AppendText("Ошибка открытия порта. Попробуйте открыть порт еще раз.\r\n");
-                    _comport.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                rtbLogger.AppendText("Ошибка:" + ex.ToString() + "\r\n");
-                _comport.Close();
-            }
+
         }
 
-        private void tryToConnect(int i)
-        {
-            rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
-            Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
-            Thread.Sleep(100);
-            readCommand(3);
-            rtbLogger.AppendText(Data);
-            if ((_readBuffer[0] == 65) && (_readBuffer[1] == 86) && (_readBuffer[2] == 69)){
-                rtbLogger.AppendText("Соединение установлено.\r\n");
-                _connectionFlag = true;
-                btConnect.Text = "Разорвать";
-                lbStatus.ForeColor = Color.Green;
-                lbStatus.Text = "Соединено";
-                Bx_temp.Enabled = Enabled;
-                Bx_time.Enabled = Enabled;
-                bt_izmer.Enabled = Enabled;
-                Update_status();
-            }
-            else{
-                rtbLogger.AppendText("Отказ.\r\n");
-            }
-        }
-
-        private void Managment(string action)
-        {
-            Write_uart(Convert.ToByte('I'), Convert.ToByte('I'), Convert.ToByte('I'));
-            Thread.Sleep(500);
-            switch(action)
-            {
-                case "preparation_null":
-                    Write_uart(Convert.ToByte('A'), Convert.ToByte('A'), Convert.ToByte('e'));
-                    break;
-                case "idle":
-                    Write_uart(Convert.ToByte('A'), Convert.ToByte('A'), Convert.ToByte('d'));
-                    break;
-                case "measuring":
-                    Write_uart(Convert.ToByte('A'), Convert.ToByte('A'), Convert.ToByte('f'));
-                    break;
-                case "distance":
-                    Write_uart(Convert.ToByte('D'), Convert.ToByte('D'), Convert.ToByte('D'));
-                    break;
-                case "pid":
-                    Write_uart(Convert.ToByte('J'), Convert.ToByte('J'), Convert.ToByte('J'));
-                    break;
-                case "temperature":
-                    Write_uart(Convert.ToByte('B'), Convert.ToByte('B'), Convert.ToByte('B'));
-                    break;
-            }
-        }
-
-        private void Update_status()
-        {
-            Write_uart(Convert.ToByte('H'), Convert.ToByte('H'), Convert.ToByte('H'));
-            Thread.Sleep(10);
-            readCommand(3);
-            if (_readBuffer[0] == 85){
-                if ((_readBuffer[2] & 0b10000000) == 0b10000000){
-                    lb_Modeinst.Text = "остановлен";
-                    lb_Modeinst.ForeColor = Color.Red;
-                }
-                if ((_readBuffer[2] & 0b00100000) == 0b00100000){
-                    lb_Modeinst.Text = "без действия";
-                    lb_Modeinst.ForeColor = Color.Green;
-                }
-                if ((_readBuffer[2] & 0b00010000) == 0b00010000){
-                    lb_Modeinst.Text = "подготовка к измерению";
-                    lb_Modeinst.ForeColor = Color.Green;
-                }
-                if ((_readBuffer[2] & 0b00001000) == 0b00001000){
-                    lb_Modeinst.Text = "производится измерение";
-                    lb_Modeinst.ForeColor = Color.Orange;
-                }
-                if ((_readBuffer[2] & 0b00000100) == 0b00000100){
-                    lb_Modeinst.Text = "авария";
-                    lb_Modeinst.ForeColor = Color.Red;
-                }
-            }
-            else{
-                lb_Modeinst.Text = "неизвестно";
-                lb_Modeinst.ForeColor = Color.Red;
-            }
-        }
-
-        private void Write_uart(byte comand, byte data1, byte data2)
-        {
-            _comport.DiscardInBuffer();
-            _comport.DiscardOutBuffer();
-            _writeBuffer[0] = comand;
-            _writeBuffer[1] = data1;
-            _writeBuffer[2] = data2;
-            rtbLogger.AppendText("Отправление команды на устройство:\r\n");
-            rtbLogger.AppendText(comand.ToString() + " " + data1.ToString() + " " + data2.ToString() + "\r\n");
-            _comport.Write(_writeBuffer, 0, 3);
-        }
-
-        private void readCommand(int bufferSize)
-        {
-            Data = "";
-            for (int i = 0; i < bufferSize; i++)
-            {
-                _readBuffer[i] = (byte)_comport.ReadByte();
-                Data += $"{_readBuffer[i]} ";
-            }
-            Data += "\r\n";
-            _readFlag = true;
-        }
-
-        private void bufferSizeError()
-        {
-            Data = "Ошибка чтения буфера: количество байтов не совпадает с необходимым.\r\n";
-            _readBuffer[0] = Convert.ToByte('!');
-            _readBuffer[1] = Convert.ToByte('!');
-            _readBuffer[2] = Convert.ToByte('!');
-            _readFlag = true;
-        }
-
-        private void timeOutError()
-        {
-            Data = $"Ошибка чтения буфера: Время ожидания истекло\r\n";
-            _readBuffer[0] = Convert.ToByte('!');
-            _readBuffer[1] = Convert.ToByte('!');
-            _readBuffer[2] = Convert.ToByte('!');
-            _readFlag = true;
-        }
     }
 }
