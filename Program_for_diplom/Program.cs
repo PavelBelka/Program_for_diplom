@@ -16,7 +16,10 @@ namespace Program_for_diplom
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            var installation = new Installation();
+            var form = new Form1();
+            Presenter presenter = new Presenter(form, installation);
+            Application.Run(form);
         }
     }
 }

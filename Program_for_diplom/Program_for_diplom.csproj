@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Images.cs" />
     <Compile Include="Installation.cs" />
+    <Compile Include="Measurement.cs" />
     <Compile Include="Presenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

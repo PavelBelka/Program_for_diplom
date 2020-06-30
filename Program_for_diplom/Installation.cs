@@ -1,35 +1,61 @@
 ﻿using System;
+using System.Threading;
+using System.Diagnostics;
+using System.IO;
 using System.IO.Ports;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Program_for_diplom
 {
     class Installation
     {
+        private SerialPort _comport;
         private string _com_port;
-        public Installation(string COM)
+        private string path;
+        private byte[] _writeBuffer = new byte[3];
+        private byte[] _readBuffer = new byte[3];
+        private bool _readFlag, _connectionFlag = false;
+        public Installation()
         {
-            _com_port = COM;
+            //_com_port = COM;
         }
+
+        private void Create_folder()
+        {
+            DateTime date = DateTime.Now;
+            path = AppDomain.CurrentDomain.BaseDirectory + date.ToString("dd.MM.yyyy_HH_mm");
+            DirectoryInfo folder = new DirectoryInfo(path);
+            if (!folder.Exists)
+            {
+                folder.Create();
+            }
+        }
+
+        /*private void Start_python()
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = "python.exe";
+            start.Arguments = "Image.py";
+            start.UseShellExecute = true;
+            start.RedirectStandardOutput = false;
+            start.CreateNoWindow = true;
+            Process process = Process.Start(start);
+        }*/
 
         public void Connect()
         {
-            SerialPort _comport = new SerialPort(_com_port, 38400, Parity.None, 8, StopBits.One);
+            _comport = new SerialPort(_com_port, 38400, Parity.None, 8, StopBits.One);
             _comport.ReadTimeout = 500;
             _comport.WriteTimeout = 500;
-            rtbLogger.AppendText("Параметры порта:\r\nСкорость передачи:" + _comport.BaudRate.ToString() + "\r\n");
-            rtbLogger.AppendText("Длина данных:" + _comport.DataBits.ToString() + "\r\n");
-            rtbLogger.AppendText("Параметры порта: отсутсвует\r\nКоличество stop-битов: 1\r\n");
-            rtbLogger.AppendText("Таймаут: 2с\r\nСоединение...\r\n");
+            //rtbLogger.AppendText("Параметры порта:\r\nСкорость передачи:" + _comport.BaudRate.ToString() + "\r\n");
+            //rtbLogger.AppendText("Длина данных:" + _comport.DataBits.ToString() + "\r\n");
+            //rtbLogger.AppendText("Параметры порта: отсутсвует\r\nКоличество stop-битов: 1\r\n");
+            //rtbLogger.AppendText("Таймаут: 2с\r\nСоединение...\r\n");
             try
             {
                 _comport.Open();
                 if (_comport.IsOpen == true)
                 {
-                    rtbLogger.AppendText("Порт открыт. Отправка запроса устройству:\r\n");
+                    //rtbLogger.AppendText("Порт открыт. Отправка запроса устройству:\r\n");
                     for (int i = 1; i < 4; i++)
                     {
                         tryToConnect(i);
@@ -40,31 +66,31 @@ namespace Program_for_diplom
                     }
                     if (!_connectionFlag)
                     {
-                        rtbLogger.AppendText("Подключено неизвестное устройство. Переподключите еще раз или выберите другой порт.\r\n");
+                        //rtbLogger.AppendText("Подключено неизвестное устройство. Переподключите еще раз или выберите другой порт.\r\n");
                         _comport.Close();
                     }
                 }
                 else
                 {
-                    rtbLogger.AppendText("Ошибка открытия порта. Попробуйте открыть порт еще раз.\r\n");
+                    //rtbLogger.AppendText("Ошибка открытия порта. Попробуйте открыть порт еще раз.\r\n");
                     _comport.Close();
                 }
             }
             catch (Exception ex)
             {
-                rtbLogger.AppendText("Ошибка:" + ex.ToString() + "\r\n");
+                //rtbLogger.AppendText("Ошибка:" + ex.ToString() + "\r\n");
                 _comport.Close();
             }
         }
 
         private void tryToConnect(int i)
         {
-            rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
+            //rtbLogger.AppendText("Попытка:" + i.ToString() + "\r\n");
             Write_uart(Convert.ToByte('G'), Convert.ToByte('Y'), Convert.ToByte('B'));
             Thread.Sleep(100);
             readCommand(3);
-            rtbLogger.AppendText(Data);
-            if ((_readBuffer[0] == 65) && (_readBuffer[1] == 86) && (_readBuffer[2] == 69))
+            //rtbLogger.AppendText(Data);
+            /*if ((_readBuffer[0] == 65) && (_readBuffer[1] == 86) && (_readBuffer[2] == 69))
             {
                 rtbLogger.AppendText("Соединение установлено.\r\n");
                 _connectionFlag = true;
@@ -79,7 +105,7 @@ namespace Program_for_diplom
             else
             {
                 rtbLogger.AppendText("Отказ.\r\n");
-            }
+            }*/
         }
 
         private void Managment(string action)
@@ -114,7 +140,7 @@ namespace Program_for_diplom
             Write_uart(Convert.ToByte('H'), Convert.ToByte('H'), Convert.ToByte('H'));
             Thread.Sleep(10);
             readCommand(3);
-            if (_readBuffer[0] == 85)
+            /*if (_readBuffer[0] == 85)
             {
                 if ((_readBuffer[2] & 0b10000000) == 0b10000000)
                 {
@@ -146,7 +172,7 @@ namespace Program_for_diplom
             {
                 lb_Modeinst.Text = "неизвестно";
                 lb_Modeinst.ForeColor = Color.Red;
-            }
+            }*/
         }
 
         private void Write_uart(byte comand, byte data1, byte data2)
@@ -156,26 +182,26 @@ namespace Program_for_diplom
             _writeBuffer[0] = comand;
             _writeBuffer[1] = data1;
             _writeBuffer[2] = data2;
-            rtbLogger.AppendText("Отправление команды на устройство:\r\n");
-            rtbLogger.AppendText(comand.ToString() + " " + data1.ToString() + " " + data2.ToString() + "\r\n");
+            //rtbLogger.AppendText("Отправление команды на устройство:\r\n");
+            //rtbLogger.AppendText(comand.ToString() + " " + data1.ToString() + " " + data2.ToString() + "\r\n");
             _comport.Write(_writeBuffer, 0, 3);
         }
 
         private void readCommand(int bufferSize)
         {
-            Data = "";
+            //Data = "";
             for (int i = 0; i < bufferSize; i++)
             {
                 _readBuffer[i] = (byte)_comport.ReadByte();
-                Data += $"{_readBuffer[i]} ";
+                //Data += $"{_readBuffer[i]} ";
             }
-            Data += "\r\n";
+            //Data += "\r\n";
             _readFlag = true;
         }
 
         private void bufferSizeError()
         {
-            Data = "Ошибка чтения буфера: количество байтов не совпадает с необходимым.\r\n";
+            //Data = "Ошибка чтения буфера: количество байтов не совпадает с необходимым.\r\n";
             _readBuffer[0] = Convert.ToByte('!');
             _readBuffer[1] = Convert.ToByte('!');
             _readBuffer[2] = Convert.ToByte('!');
@@ -184,7 +210,7 @@ namespace Program_for_diplom
 
         private void timeOutError()
         {
-            Data = $"Ошибка чтения буфера: Время ожидания истекло\r\n";
+            //Data = $"Ошибка чтения буфера: Время ожидания истекло\r\n";
             _readBuffer[0] = Convert.ToByte('!');
             _readBuffer[1] = Convert.ToByte('!');
             _readBuffer[2] = Convert.ToByte('!');
